@@ -26,8 +26,6 @@ public class LoginCheckFilter extends HttpFilter {
 		String path = requestURL.substring(contextPath.length());
 
 		 System.out.println("URL = " + requestURL);
-//		    System.out.println("contextPath = " + contextPath);
-//		    System.out.println("path = " + path);
 
 		    // ログイン画面、静的ファイルは除外
 		   		    

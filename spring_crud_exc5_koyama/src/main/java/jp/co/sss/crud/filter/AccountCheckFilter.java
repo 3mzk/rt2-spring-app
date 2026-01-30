@@ -104,7 +104,6 @@ public class AccountCheckFilter extends HttpFilter {
                 }
                 }
 		}
-        // ここまで来たら許可
         chain.doFilter(request, response);
     }
 }

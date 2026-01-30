@@ -1,18 +1,23 @@
 package jp.co.sss.crud.controller;
 
 import java.text.ParseException;
+import java.util.Comparator;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
 import jp.co.sss.crud.bean.EmployeeBean;
+import jp.co.sss.crud.repository.EmployeeRepository;
 import jp.co.sss.crud.service.SearchAllEmployeesService;
+import jp.co.sss.crud.service.SearchEmployeesByConditionService;
 import jp.co.sss.crud.service.SearchForEmployeesByDepartmentService;
 import jp.co.sss.crud.service.SearchForEmployeesByEmpNameService;
 
@@ -27,6 +32,9 @@ public class ListController {
 
 	@Autowired
 	SearchForEmployeesByDepartmentService searchForEmployeesByDepartmentService;
+	
+	@Autowired
+	SearchEmployeesByConditionService searchEmployeesByConditionService;
 
 	/**
 	 * 社員情報を全件検索した結果を出力
@@ -35,21 +43,65 @@ public class ListController {
 	 * @return 遷移先のビュー
 	 * @throws ParseException 
 	 */
+//	@Autowired
+//    private SearchAllEmployeesAjaxService searchAllEmployeesAjaxService;
+    @Autowired
+    private EmployeeRepository repository;
+
+    @ModelAttribute("loginUser")
+    public EmployeeBean setLoginUser(HttpSession session) {
+        return (EmployeeBean) session.getAttribute("loginUser");
+    }
+
+
+ 
 	
 	
 	@RequestMapping(path = "/list", method = RequestMethod.GET)
-	public String findAll(Model model,HttpServletRequest request) {
+	public String findAll(
+			@RequestParam(required = false) String address,
+	        @RequestParam(required = false) Integer authority,
+	        @RequestParam(required = false) String sortOrder, 
+			Model model,HttpServletRequest request) {
+		// ★ ここでログ出力
+	    System.out.println("===== 条件検索ログ =====");
+	    System.out.println("address = " + address);
+	    System.out.println("authority = " + authority);
+	    System.out.println("sortOrder = " + sortOrder);
+	    System.out.println("=======================");
+
 
 		List<EmployeeBean> allEmployeeList = null;
 		//TODO SearchAllEmployeesService完成後にコメントを外す
-				allEmployeeList = searchAllEmployeesService.execute();
+//				allEmployeeList = searchAllEmployeesService.execute();
+				
+				
+				// 条件検索
+			    if ((address != null && !address.isEmpty())
+			            || authority != null) {
 
+			    	allEmployeeList = searchEmployeesByConditionService
+			                .execute(address, authority);
+
+			    } else {
+			        // 全件検索
+			    	allEmployeeList = searchAllEmployeesService.execute();
+			    }
+
+			    
+			    
+				if ("desc".equals(sortOrder)) {
+			        allEmployeeList.sort(Comparator.comparing(EmployeeBean::getEmpId).reversed());
+			    } else {
+			        allEmployeeList.sort(Comparator.comparing(EmployeeBean::getEmpId));
+			    }
+		model.addAttribute("sortOrder", sortOrder);
 		model.addAttribute("employees", allEmployeeList);
-		HttpSession session = request.getSession(false);
-		model.addAttribute("loginUser", session.getAttribute("loginUser"));
+		
 		return "list/list";
 		
 	}
+	
 
 	/**
 	 * 社員情報を社員名検索した結果を出力
@@ -90,4 +142,6 @@ public class ListController {
 		model.addAttribute("employees", searchByDepartmentList);
 		return "list/list";
 	}
+	
+	
 }

@@ -29,7 +29,8 @@ table {
 	margin: 0px auto 20px;
 }
 
-table td, table th {
+table td,
+table th {
 	border-width: 1px;
 	border-style: solid;
 	border-color: #87CEEB;
@@ -56,6 +57,7 @@ th.address {
 }
 
 th.birthday {
+/*	100→120*/
 	width: 100px;
 }
 
@@ -77,6 +79,26 @@ td.button {
 
 table td {
 	padding-left: 5px;
+}
+
+/*ホバーで色変え*/
+.list_table tr:hover {
+	background-color: #f0f8ff;
+}
+.list_table {
+    width: 100%;
+    border-collapse: collapse;
+    table-layout: auto; /* 列幅 */
+    
+}
+
+/*スクロール*/
+.table-wrapper {
+    max-height: 400px;
+    overflow-y: auto;
+    overflow-x: auto;
+    border: 1px solid #87CEEB;
+    margin-bottom: 20px;
 }
 
 /* ---- 入力フォーム(検索、登録、変更、削除) ---- */
@@ -103,7 +125,7 @@ div.input {
 	width: 470px;
 	height: 35px;
 	text-align: left;
-	
+
 }
 
 select {
@@ -113,24 +135,61 @@ select {
 
 /* ---- 入力フォーム(ログイン) ---- */
 
-.login_form{
-	display: flex;
-}
-div.login_label {
+.login_form {
 
+	display: flex;
+	align-items: center;
+    margin-bottom: 10px;
+}
+
+div.login_label {
 	width: 305px;
 	height: 35px;
 	padding-right: 5px;
 	text-align: right;
+
+
 }
 
 div.login_input {
-	
 	width: 410px;
 	height: 35px;
 	text-align: left;
+	display: flex;
+	flex-direction: row; 
+	align-items: center;
+	
+	gap: 4px; 
+	
 }
- 
+
+.login_action {
+	display: flex;
+	align-items: flex-start;
+	gap: 15px;
+}
+
+
+/*  pc用エラー*/
+.error-message {
+
+	    display: block;
+      font-size: 12px;
+    margin-top: 4px;
+    text-align: left; 
+	color: rgb(255, 0, 0);
+}
+
+/*チェックボックス*/
+.show-password {
+	/*    margin-top: 5px;*/
+	font-size: 12px;
+	white-space: nowrap;
+}
+
+input.error-border {
+	border: 2px solid red;
+}
 
 /* ---- 処理完了メッセージの出力箇所 ---- */
 div.message {
@@ -158,3 +217,135 @@ input[type=submit] {
 	color: #FF0000;
 }
 
+.hamburger {
+    display: none;
+    flex-direction: column;
+    gap: 5px;
+    cursor: pointer;
+}
+
+.hamburger span {
+    width: 25px;
+    height: 3px;
+    background-color: #12526d;
+    border-radius: 3px;
+}
+
+
+
+/* スマホ用 */
+@media (max-width: 768px) {
+	.login_form {
+		width: 100%;
+		flex-direction: column;
+		align-items: flex-start;
+		margin-left: 10px;
+	}
+
+	div.login_label {
+/*		ログインフォーム上の文字*/
+		width: auto;
+		text-align: center;
+		margin-left: 25px;
+		font-weight: bold;
+
+
+	}
+
+	.login_input {
+		width: 100%;
+		display: flex;
+		flex-direction: row;
+		align-items: flex-start;
+		align-items: center;
+		gap: 10px;
+
+	}
+
+	.show-password {
+		order: 2;
+		/* 入力欄の下に来る */
+		font-size: 14px;
+		margin-top: 10px;
+	}
+
+	/* ログインボタンを中央に配置、幅100% */
+	.login_action {
+		width: 110px;
+		display: flex;
+		justify-content: center;
+		margin:10px, 10px, 20px, 5px;
+	
+	}
+
+
+	#loginBtn {
+		width: 80%;
+		max-width: 300px;
+		padding: 10px;
+		font-size: 16px;
+	}
+
+	.error-message {
+		color: red;
+		font-size: 10px;
+		margin-top: 0px;
+		
+	}
+/*	社員一覧*/
+div.form {
+        width: 100%;
+      
+    }
+
+ .list_table th,
+    .list_table td {
+        padding: 6px 4px;
+        font-size: 12px;
+        white-space: nowrap;
+    }
+
+    .table-wrapper {
+		overflow-x: auto;
+        padding-left: 12px;
+        padding-right: 16px;
+        box-sizing: content-box;
+       
+    }
+
+	.list_table {
+    min-width: 650px; /* 横幅調整 */
+}
+
+    /* 長い列は省略 */
+    .address, .deptName {
+        max-width: 120px;
+        overflow: hidden;
+        text-overflow: ellipsis;
+    }
+
+	
+	/* スマホメニュー（最初は非表示） */
+.mobile-menu {
+    display: none;
+    background: #f0f8ff;
+    padding: 10px;
+}
+
+  
+    .mobile-menu.open {
+        display: block !important;
+    }
+}
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    

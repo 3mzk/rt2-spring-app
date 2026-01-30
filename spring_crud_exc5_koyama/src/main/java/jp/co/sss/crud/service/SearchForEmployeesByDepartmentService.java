@@ -48,7 +48,7 @@ public class SearchForEmployeesByDepartmentService {
 	public List<EmployeeBean> execute(Integer deptId) {
 		 Department dept = new Department();
 	        dept.setDeptId(deptId); //部署IDから
-		List<Employee> employees =repository.findByDepartmentOrderByEmpIdAsc(dept);
+		List<Employee> employees =repository.findByDepartmentDeptIdOrderByEmpIdAsc(deptId);
 		if (employees.isEmpty()) {
             return Collections.emptyList();
         }

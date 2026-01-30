@@ -22,24 +22,91 @@
 				<div class="login_form">
 				<div class="login_label">社員ID</div>
 				<div class="login_input">
-					<input type="text" th:field="*{empId}" />
+					<input type="text" id="empId" th:field="*{empId}" />
+					<span id="empIdError" class="error-message"></span>
 				</div>
 				</div>
 				<div class="login_form">
 				<div class="login_label">パスワード</div>
 				<div class="login_input">
-					<input type="password" th:field="*{empPass}" />
+					<input type="password" id="password" th:field="*{empPass}" />
+					<span id="passwordError" class="error-message"></span>
+
+
+					<div class="show-password">
+        <input type="checkbox" id="togglePassword">
+        <label for="togglePassword">パスワードを表示</label>
+            </div>
 				</div>
 				</div>
 				<div class="login_form">
 				<div class="login_label"></div>
-				<div class="login_input">
-					<input type="submit" value="ログイン" />
+				<div class="login_action">
+					<input type="submit" id="loginBtn" value="ログイン" />
+
+        </div>
+
 				</div>
 				</div>
 			</form>
 		</div>
 	</div>
 	</th:block>
+	
+	        <script>
+    const password = document.getElementById("password");
+    const toggle = document.getElementById("togglePassword");
+
+    toggle.addEventListener("change", () => {
+        password.type = toggle.checked ? "text" : "password";
+    });
+</script>
+<script>
+document.addEventListener("DOMContentLoaded", function() {
+
+    const empId = document.getElementById("empId");
+    const password = document.getElementById("password");
+    const loginBtn = document.getElementById("loginBtn");
+
+    const empIdError = document.getElementById("empIdError");
+    const passwordError = document.getElementById("passwordError");
+
+    function validate() {
+        let isValid = true;
+
+        // 社員IDチェック
+        if (empId.value.trim() === "") {
+            empIdError.textContent = "社員IDを入力してください";
+            empId.classList.add("error-border");
+            isValid = false;
+        } else if (!/^[0-9]+$/.test(empId.value)) {
+            empIdError.textContent = "数字のみ入力できます";
+            empId.classList.add("error-border");
+            isValid = false;
+        } else {
+            empIdError.textContent = "";
+            empId.classList.remove("error-border");
+        }
+
+        // パスワードチェック
+        if (password.value.trim() === "") {
+            passwordError.textContent = "パスワードを入力してください";
+            password.classList.add("error-border");
+            isValid = false;
+        } else {
+            passwordError.textContent = "";
+            password.classList.remove("error-border");
+        }
+
+        // ボタンの有効/無効
+        //loginBtn.disabled = !isValid;
+    }
+
+    // リアルタイムチェック
+    empId.addEventListener("input", validate);
+    password.addEventListener("input", validate);
+
+});
+</script>
 </body>
 </html>

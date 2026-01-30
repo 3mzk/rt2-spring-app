@@ -11,7 +11,7 @@ body {
 .content {
 	display: flex;
 	flex-direction: row;
-	justify-content:space-between;
+	justify-content: space-between;
 	width: 920px;
 	margin: 0px auto;
 }
@@ -68,7 +68,7 @@ aside input[type=text] {
 aside select {
 	margin: 0px 10px 0px 0px;
 	vertical-align: middle;
-	width: 110px;
+	width: 110px !important;
 }
 
 aside input[type=submit] {
@@ -76,16 +76,21 @@ aside input[type=submit] {
 	margin-right: 5px;
 }
 
+
+
 /* ---- メイン ---- */
 article {
-	
+
 	width: 700px;
 	padding-left: 20px;
 }
 
 
+
 /* ---- フッター ---- */
 footer {
+	margin-top: 100px;
+	margin-bottom: 0px;
 	height: 30px;
 	background-color: #87CEEB;
 	text-align: center;
@@ -93,3 +98,92 @@ footer {
 	line-height: 30px;
 }
 
+@media (min-width: 769px) {
+	.mobile-menu {
+		display: none !important;
+	}
+}
+
+
+@media (max-width: 768px) {
+
+	aside {
+		width: 100% !important;
+		display: block !important;
+
+	}
+
+	article {
+		width: 100% !important;
+		padding-left: 0;
+	}
+
+	/*     ハンバーガーはスマホで表示 */
+	/*    .hamburger {*/
+	/*        display: flex !important;*/
+	/*    }*/
+	/*    .hamburger span {*/
+	/*        width: 25px;*/
+	/*        height: 3px;*/
+	/*        background-color: #12526d;*/
+	/*        border-radius: 3px;*/
+	/*    }*/
+
+
+	/* スマホメニュー（初期非表示） */
+	.mobile-menu {
+		display: none;
+		background: #f0f8ff;
+		padding: 10px;
+	}
+
+	.mobile-menu.open {
+		display: block !important;
+	}
+
+/*	.content {*/
+/*		flex-direction: column !important;*/
+/*		width: 100% !important;*/
+/*		margin: 0 !important;*/
+/*	}*/
+
+	aside {
+		width: 100% !important;
+		display: block;
+	}
+
+	article {
+		width: 100% !important;
+		padding-left: 0 !important;
+	}
+
+	body .content {
+		flex-direction: column !important;
+		width: 100% !important;
+		margin: 0 !important;
+	}
+
+	header .content {
+		display: flex;
+		flex-direction: column !important;
+		align-items: flex-start;
+		/* 左寄せ */
+		padding: 5px 10px;
+		gap: 2px;
+	}
+
+
+	header .title {
+		font-size: 18px;
+		font-weight: bold;
+	}
+header .user_info {
+		display: block !important;
+		font-size: 12px;
+		/* 2行目は小さめ */
+		margin-top: 2px;
+		white-space: nowrap;
+	}
+
+
+}

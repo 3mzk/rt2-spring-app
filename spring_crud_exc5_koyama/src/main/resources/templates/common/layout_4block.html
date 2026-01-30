@@ -5,26 +5,48 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 <link rel="stylesheet" type="text/css" th:href="@{/css/layout.css}" />
 <link rel="stylesheet" type="text/css" th:href="@{/css/stylesheet.css}" />
-<title>社員管理システム</title>
+
+<!--<title>社員管理システム</title>-->
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+ <script th:src="@{/js/hamburger.js}"></script>
+
 </head>
 <body>
 	<!--/* ヘッダー */-->
 	<header>
 		<div th:replace="~{common/header :: layout-header}"></div>
+		
+		
+
+     <!-- ハンバーガーメニューにサイドバーの内容を入れる -->
+    <div class="hamburger" id="hamburger">
+        <span></span>
+    	<span></span>
+    	<span></span>
+    </div>
+
+    <nav class="mobile-menu" id="mobileMenu">
+        <div th:replace="~{common/sidebar :: layout-sidebar}"></div>
+    </nav>
+
 	</header>
 	<div class="content">
-		<!--/* サイドバー */-->
-		<aside>
-			<div th:replace="~{common/sidebar :: layout-sidebar}"></div>
-		</aside>
+		<!--/* サイドバー/pc */-->
+		<div class="sidebar-pc" th:replace="~{common/sidebar :: layout-sidebar}"></div>
+	
 		<!--/* メイン */-->
 		<article class="main">
 			<div th:replace="${body}"></div>
 		</article>
 	</div>
+
+
+	
 	<!--/* フッター */-->
 	<footer>
 		<div th:replace="~{common/footer :: layout-footer}"></div>
 	</footer>
+
+
 </body>
 </html>

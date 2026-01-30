@@ -1,40 +1,75 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
+
 <head>
-<meta charset="UTF-8" />
+	<meta charset="UTF-8" />
 </head>
+
 <body>
-	<aside th:fragment="layout-sidebar" th:class="${session.user == null or session.user.authority == 2} ? ${'search'} : ${'admin_menu'}" >
-	  <div class="title">社員名検索</div>
-	  <div class="form">
-	    <form th:action="@{/list/empName}" method="get">
-	      <input type="text" name="empName" />
-	      <input type="submit" value="検索" />
-	    </form>
-	  </div>
-	  <div class="title">部署名検索</div>
-	  <div class="form">
-	    <form th:action="@{/list/deptId}" method="get">
 
-	     <span th:if="${selectedDeptId == null}">
-	      	<select name="deptId">
-	        	<option value="1"selected>営業部</option>
-	        	<option value="2">経理部</option>
-	        	<option value="3">総務部</option>
-	      	</select>
-	     </span>
 
-	     <span th:unless="${selectedDeptId == null}">
-	     	<select name="deptId">
-	      		<option value="1" th:selected="${selectedDeptId}== '1'">営業部</option>
-	        	<option value="2" th:selected="${selectedDeptId}== '2'">経理部</option>
-	       		<option value="3" th:selected="${selectedDeptId}== '3'">総務部</option>
-	      	</select>
-	     </span>
 
-	     <input type="submit" value="検索" />
-	    </form>
-	  </div>
+	<aside th:fragment="layout-sidebar" th:class="${session.loginUser != null and session.loginUser.authority == 2}
+                 ? 'search' : 'admin_menu'">
+
+		<!-- 社員名検索 -->
+		<div class="title">社員名検索</div>
+		<div class="form">
+			<form th:action="@{/list/empName}" method="get">
+				<input type="text" name="empName" id="searchName" />
+				<input type="submit" value="検索">
+			</form>
+		</div>
+
+		<!-- 部署名検索 -->
+		<div class="title">部署名検索</div>
+		<div class="form">
+			<form th:action="@{/list/deptId}" method="get" id="searchDeptId">
+				<select name="deptId" id="searchDept">
+					<option value="1" selected>営業部</option>
+					<option value="2">経理部</option>
+					<option value="3">総務部</option>
+				</select>
+				<input type="submit" value="検索">
+			</form>
+		</div>
+
+		<!-- 条件検索（住所＋権限） -->
+		<div class="title">条件検索</div>
+		<div class="form">
+			<form th:action="@{/list}" method="get">
+
+				<!-- 住所 -->
+				<div style="margin-bottom: 8px;">
+					<input type="text" name="address" placeholder="住所">
+				</div>
+
+				<!-- 権限 -->
+				<div style="margin-bottom: 8px;">
+					<select name="authority">
+						<option value="">--権限--</option>
+						<option value="1">一般</option>
+						<option value="2">管理者</option>
+					</select>
+				</div>
+
+				<input type="submit" value="検索">
+			</form>
+		</div>
+
+		<!-- 並び順 -->
+		<div class="title">並び順</div>
+		<div class="form">
+			<form th:action="@{/list}" method="get">
+				<select id="sortOrder" name="sortOrder" class="sort-select" onchange="this.form.submit()">
+					<option value="asc" th:selected="${sortOrder == 'asc'}">昇順</option>
+					<option value="desc" th:selected="${sortOrder == 'desc'}">降順</option>
+				</select>
+			</form>
+		</div>
+
 	</aside>
+
 </body>
+
 </html>
